@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    {% block title %}
+        <title>Home</title>
+    {% endblock %}
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+        type='text/css'>
+    <link
+        href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/clean-blog.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'img/change.ico' %}">
+    
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'Home' %}">Changeep</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'Home' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Empresas
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'Empresas' %}">Consultar empresas</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'añadirEmpresa' %}">Alta empresas</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Proveedores
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'Proveedores' %}">Consultar proveedores</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'alta_proveedores' %}">Alta proveedores</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'Contacto' %}">Soporte</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown" style="text-indent: 30px;">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="false">
+                        {{user.username}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                             <a class="dropdown-item" href="{% url 'password_change' %}">Ajustes</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Salir</a>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Cuenta
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead"
+        style="background-image: url({% block imagen %}{% static 'img/home-bg.jpg' %}{% endblock imagen %})">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="site-heading">
+                        {% block titulo_centro %}
+                            <h2>Home</h2>
+                        {% endblock titulo_centro %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    {% block content %}
+       
+    {% endblock %}
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+    
+                <div class="col-lg-5 col-md-5 col-sm-4 col-xs-12">
+                    <ul class="adress">
+                        <span>Dirección</span>
+                        <li>
+                            <p>Arquitecto Arnau, 45, 5</p>
+                        </li>
+    
+                        <li>
+                            <p>+96 1234 56789</p>
+                        </li>
+    
+                        <li>
+                            <p>infochangeep@gmail.com</p>
+                        </li>
+                    </ul>
+                </div>
+    
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <ul class="contact">
+                        <span>Contacto</span>
+                        <li>
+                            <a href="{% url 'Home' %}">Home</a>
+                        </li>
+                        
+                        <li>
+                            <a href="{% url 'Empresas' %}">Empresas</a>
+                        </li>
+                        
+                        <li>
+                            <a href="{% url 'Proveedores' %}">Proveedores</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'Contacto' %}">Soporte</a>
+                        </li>
+                    </ul>
+                </div>
+    
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <ul class="social">
+                        <span>Social</span>
+                        <li>
+                            <a href="#"><i class="fab fa-2x fa-facebook-square"></i></a>
+                        </li>
+                        
+                        <li>
+                            <a href="#"><i class="fab fa-github fa-2x"></i></a>
+                        </li>
+    
+                        <li>
+                            <a href="#"><i class="fab fa-2x fa-instagram"></i></a>
+                        </li>
+    
+                        <li>
+                            <a href="#"><i class="fab fa-google-plus-g fa-2x"></i></a>
+                        </li>
+    
+                    </ul>
+                </div>
+    
+    
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static 'js/clean-blog.min.js' %}"></script>
+
+</body>
+</html>

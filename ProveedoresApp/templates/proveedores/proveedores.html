@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Titulo web -->
+{% block title %}
+<title>Proveedores</title>
+{% endblock %}
+
+<!-- Titulo header -->
+{% block titulo_centro %}
+    <h2>Consultar proveedores</h2>
+    <p>Consulta todos los proveedores, que estaran a tu disposición.</p>
+    <br>
+    <!-- Barra de busqueda -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 serarch">
+                <form  method="GET">
+                    <div id="custom-search-input">
+                        <div class="input-group col-m2-12">
+                            <input type="text" class="form-control" placeholder="Buscar..." name="buscar" value="" id="buscador">
+                            <span class="input-group-list">
+                                <i class="icon icon-search"></i>
+                                <button type="submit" class="boton btn-success" style="height: 40px;">Buscar</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+    
+            </div>
+        </div>
+    </div> 
+    <!-- Fin barra de busqueda -->
+{% endblock titulo_centro %}
+
+
+<!-- Imagen header -->
+{% block imagen %}
+{% static 'img/proveedores.jpg' %}
+{% endblock imagen %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for proveedor in proveedores %}
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-4">
+            {% if proveedor.img_proveedor %}
+            <img src="{{proveedor.img_proveedor.url}}" alt="" width="300px" height="205px">
+            {% endif %}
+        </div>
+        <br><br>
+        <div class="col-lg-8 col-md-6 col-sm-12 col-xs-4 mx-auto">
+            <div class="post-preview">
+                <a href="{% url 'Slug_proveedores' proveedor.slug %}">
+                    <h3 class="post-title">
+                        {{proveedor.nombre}}
+                        </h2>
+                        <p class="post-subtitle">
+                            {{proveedor.descripcion}}
+                        </p>
+                </a>
+                <p class="post-meta">
+                    {{proveedor.created}}
+                </p>
+            </div>
+            <hr width="-700px">
+        </div>
+        {% endfor %}
+
+        <div class="pagination mx-auto">
+            {% if proveedores.has_previous %}
+            <a class="pagination-action mx-auto" href="?page=1">
+                &nbsp;&nbsp;<i class="fas fa-angle-double-left"></i>
+            </a>
+            <a class="pagination-action" href="?page={{proveedores.previous_page_number}}">
+                <i class="fas fa-angle-left"></i>
+            </a>
+            {% endif %}
+        
+            {% for num in proveedores.paginator.page_range %}
+            {% if proveedores.number == num %}
+            &nbsp;&nbsp;
+            <span class="pagination-number pagination-current">{{ num }}</span>
+            {% elif num > proveedores.number|add:'-3' and num < proveedores.number|add:'3' %} &nbsp;&nbsp; <a
+                class="pagination-number" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+        
+                {% endfor %}
+                {% if proveedores.has_next %}
+                <a class="pagination-action mx-auto" href="?page={{proveedores.next_page_number}}">
+                    &nbsp;&nbsp; <i class="fas fa-angle-right"></i>
+                </a>
+                <a class="pagination-action" href="?page={{proveedores.paginator.num_pages}}">
+                    <i class="fas fa-angle-double-right"></i>
+                </a>
+                {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

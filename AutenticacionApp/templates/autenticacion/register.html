@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Register</title>
+{% endblock %}
+
+
+{% block titulo_centro %}
+<h2 hidden>Registrate</h2>
+{% endblock titulo_centro %}
+
+
+<!-- Imagen header -->
+{% block imagen %}
+{% static 'img/register.jpg' %}
+{% endblock imagen %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="card bg-light">
+            <article class="card-body mx-auto" style="max-width: 400px;">
+                <h4 class="card-title mt-3 text-center">Create una Cuenta</h4>
+                <p class="text-center">Empiece con su cuenta gratuita</p>
+                <p>
+                    <a href="{% url "social:begin" "google-oauth2" %}"  class="btn btn-block btn-twitter"><i class="fab fa-google-plus-g"></i>  Login via Google+</a>
+                    <a href="{% url "social:begin" "facebook" %}" class="btn btn-block btn-facebook" ><i class="fab fa-facebook-f"></i>Login via Facebook</a>
+                </p>
+                <p class="divider-text">
+                    <span class="bg-light">OR</span>
+                </p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <label for="">Usuario</label>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        {{form.username}}
+                    </div> <!-- form-group// -->
+                    <label for="">Nombre</label>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        {{form.first_name}}
+                    </div> <!-- form-group// -->
+                    <label for="">Email</label>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                        </div>
+                        {{form.email}}
+                    </div> <!-- form-group// -->
+                    Contraseña
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        </div>
+                        {{form.password}}
+                    </div> <!-- form-group// -->
+                    Repite la contraseña
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        </div>
+                        {{form.password2}}
+                    </div> <!-- form-group// -->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block"> Crear Cuenta </button>
+                    </div> <!-- form-group// -->
+                </form>
+            </article>
+        </div> <!-- card.// -->
+    
+    </div>
+    <!--container end.//-->
+{% endblock %}
+
+

@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Titulo web -->
+{% block title %}
+    <title>Empresas</title>
+{% endblock %}
+
+<!-- Titulo header -->
+{% block titulo_centro %}
+    <h2>Consultar empresas</h2>
+    <p>Aqui puedes consultar todas las empresas, que estaran a tu disposición.</p>
+    <br>
+    <!-- Barra de busqueda -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 serarch">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group col-m2-12">
+                            <input type="text" class="form-control" placeholder="Buscar..." name="buscar"
+                                value="{{request.GET.buscar}}">
+                            <span class="input-group-list">
+                                <i class="icon icon-search"></i>
+                                <button type="submit" class="boton btn-success" style="height: 40px;">Buscar</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+    
+            </div>
+        </div>
+    </div>
+    <!-- Fin barra de busqueda -->
+{% endblock titulo_centro %}
+
+
+<!-- Imagen header -->
+{% block imagen %}
+    {% static 'img/empresas.jpg' %}
+{% endblock imagen %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+        {% for empresa in empresas %}
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-4">
+                {% if empresa.logo_empresa %}
+                <img src="{{empresa.logo_empresa.url}}" alt="" width="300px" height="205px">
+                {% endif %}
+            </div>
+            <br><br>
+            <div class="col-lg-8 col-md-6 col-sm-12 col-xs-4 mx-auto">
+                <div class="post-preview">
+                    <a href="{% url 'EmpresaSlug' empresa.slug %}">
+                        <h3 class="post-title">
+                            {{empresa.nombre}}
+                        </h2>
+                        <p class="post-subtitle">
+                            {{empresa.descripcion}}
+                        </p>
+                    </a>
+                    <p class="post-meta">
+                        {{empresa.created}}
+                    </p>
+                </div>
+                <hr width="-700px">
+            </div>
+        {% endfor %}
+
+            <div class="pagination mx-auto">
+                {% if empresas.has_previous %}
+                    <a class="pagination-action mx-auto" href="?page=1">
+                        &nbsp;&nbsp;<i class="fas fa-angle-double-left"></i>
+                    </a>
+                    <a class="pagination-action" href="?page={{empresas.previous_page_number}}">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                {% endif %}
+
+                {% for num in empresas.paginator.page_range %}
+                    {% if empresas.number == num %}
+                        &nbsp;&nbsp;
+                        <span class="pagination-number pagination-current">{{ num }}</span>
+                {% elif num > empresas.number|add:'-3' and num < empresas.number|add:'3' %}
+                       &nbsp;&nbsp;
+                       <a class="pagination-number" href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+
+                {% endfor %}
+                {% if empresas.has_next %}
+                    <a class="pagination-action mx-auto" href="?page={{empresas.next_page_number}}">
+                        &nbsp;&nbsp; <i class="fas fa-angle-right"></i>
+                    </a>
+                    <a class="pagination-action" href="?page={{empresas.paginator.num_pages}}">
+                        <i class="fas fa-angle-double-right"></i>
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

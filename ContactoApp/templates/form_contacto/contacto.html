@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Contacto</title>
+{% endblock %}
+
+
+{% block titulo_centro %}
+    <h2>Contactanos</h2>
+    <br>
+    <h5>Ponte en contacto con nosotros y resolveremos cualquier duda que te pueda surgir</h5>
+{% endblock titulo_centro %}
+
+
+<!-- Imagen header -->
+{% block imagen %}
+{% static 'img/contacto.jpg' %}
+{% endblock imagen %}
+
+
+{% block content %}
+    <div class="body">
+        <br>
+        <div class="container contact-form">
+            <div class="contact-image">
+                <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact" />
+            </div>
+            {% if "valido" in request.GET %}
+            <br>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li class="{{ message.tags }}">
+                        {{ message|safe }}
+                        <a href="" class="close">x</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <br>
+                <form method="POST" action="" >
+                    {% csrf_token %}
+                    <h3>Envíenos un mensaje</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            {{formulario.nombre}}
+                            </div>
+                            <div class="form-group">
+                                {{formulario.email}}
+                            </div>
+                            <div class="form-group">
+                                {{formulario.tfno}}
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="btnSubmit" class="btnContact" value="Enviar" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                    {{formulario.mensaje}}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% else %}
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <h3>Envíenos un mensaje</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{formulario.nombre}}
+                            </div>
+                            <div class="form-group">
+                                {{formulario.email}}
+                            </div>
+                            <div class="form-group">
+                                {{formulario.tfno}}
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="btnSubmit" class="btnContact" value="Enviar" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{formulario.mensaje}}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+            {% if "error" in request.GET %}
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <h3>Envíenos un mensaje</h3>
+                    <p>Error</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{formulario.nombre}}
+                            </div>
+                            <div class="form-group">
+                                {{formulario.email}}
+                            </div>
+                            <div class="form-group">
+                                {{formulario.tfno}}
+                            </div>
+                            <div class="form-group" >
+                                <input type="submit" name="btnSubmit" class="btnContact" value="Enviar"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{formulario.mensaje}}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+        <br>
+    </div>
+{% endblock %}

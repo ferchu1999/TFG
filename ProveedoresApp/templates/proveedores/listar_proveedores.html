@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Titulo web -->
+{% block title %}
+<title>Proveedores</title>
+{% endblock %}
+
+<!-- Titulo header -->
+{% block titulo_centro %}
+<h2></h2>
+{% endblock titulo_centro %}
+
+
+<!-- Imagen header -->
+{% block imagen %}
+{% static 'img/proveedores.jpg' %}
+{% endblock imagen %}
+
+{% block content %}
+    <div class="bodys">
+        <br>
+        <div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            {% if slugs.img_proveedor %}
+                            <img src="{{slugs.img_proveedor.url}}" alt="" width="300px" height="350px">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                            <h5>
+                                {{slugs.nombre}}
+                            </h5>
+                            <br>
+                            <br>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                        aria-controls="home" aria-selected="true">Perfil</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            <br>
+                            <h5>Enlaces web</h5>
+                            <h6><a href="{{slugs.web}}" target="_blank">Página web</a><br /></h6>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Ciudad</label>
+                                </div>
+                                <div class="col-md-6">
+                                    {{slugs.ciudad}}
+                                </div>
+                            </div>
+                            <p></p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Dirección</label>
+                                </div>
+                                <div class="col-md-6">
+                                    {{slugs.direccion}}
+                                </div>
+                            </div>
+                            <p></p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-6">
+                                    {{slugs.email}}
+                                </div>
+                            </div>
+                            <p></p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Télefono</label>
+                                </div>
+                                <div class="col-md-6">
+                                    {{slugs.tfno}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </form>
+        <br><br>
+    </div>
+    </div>
+    <br>
+    <br>
+    
+    {% if user.is_authenticated %}
+
+    <div style="margin-left: 50px;">
+        {% with comments.count as total_comments %}
+        <h2>
+            {{ total_comments }} comentario{{ total_comments|pluralize }}
+        </h2>
+        {% endwith %}
+        {% for comment in comments %}
+        <div class="comment">
+            <p class="info">
+                <hr>
+
+                {{ comment.nombre }} &nbsp;&nbsp;
+                {{ comment.created }}
+            </p>
+            {{ comment.comentario|linebreaks }}
+        </div>
+        {% empty %}
+        <p>No hay comentarios.</p>
+        {% endfor %}
+        {% if new_comment %}
+        <div class="alert alert-success mr-auto" role="alert" style="width: 50%;">
+            Tu comentario ha sido añadido.
+        </div>
+        {% else %}
+        <br><br>
+        <h2>Añade un comentario</h2>
+        <br>
+        <form method="post">
+            <label for="">Nombre usuario</label>
+            <br>
+            {{ comment_form.nombre }}
+            <br>
+            <br>
+            <label for="">Comentario</label>
+            <br>
+             {{ comment_form.comentario }}
+            {% csrf_token %}
+            <p><button class="btn btn-primary" type="submit">Añadir comentario</button></p>
+        </form>
+        {% endif %}
+    </div>
+
+    {% else %}
+
+    <div style="margin-left: 50px;">
+        {% with comments.count as total_comments %}
+        <h2>
+            {{ total_comments }} comentario{{ total_comments|pluralize }}
+        </h2>
+        {% endwith %}
+        {% for comment in comments %}
+        <div class="comment">
+            <p class="info">
+                <hr>
+                {{ comment.nombre }} &nbsp;&nbsp;
+                {{ comment.created }}
+            </p>
+            {{ comment.comentario|linebreaks }}
+        </div>
+        {% empty %}
+        <p>No hay comentarios.</p>
+        {% endfor %}
+        {% if new_comment %}
+        <div class="alert alert-success mr-auto" role="alert" style="width: 50%;">
+            Tu comentario ha sido añadido.
+        </div>
+        {% else %}
+        <br><br>
+        <h2>Añade un comentario</h2>
+        {{ comment_form.as_p }}
+        <a href="{% url 'login' %}">
+            <p><button class="btn btn-primary" style="margin-left: 50px;">Añadir comentario</button></p>
+        </a>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endblock %}

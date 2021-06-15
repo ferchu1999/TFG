@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Titulo -->
+{% block title %}
+    <title>Inicio</title>
+{% endblock %}
+<!-- Fin titulo -->
+
+
+<!-- Titulo header -->
+{% block titulo_centro %}
+    <h4>La mejor solución para su negocio</h4>
+    <p>Le ayudamos a maximizar el rendimiento y a construir una organización saludable.</p>
+    <button type="submit" class="buttons"><a datascroll  href="#scroll" style="text-decoration: none; color: white;">Leer más</a></button>
+{% endblock titulo_centro %}
+
+<!-- Imagen header -->
+{% block imagen %}
+    {% static 'img/home.jpg' %}
+{% endblock imagen %}
+
+{% block content %}
+    <!-- Seccion 1 -->
+    <section id="services" class="container">
+        <h2 class="display-4 text-center mt-5 mb-3">Nuestros servicios</h2>
+        <br>
+        <br>
+        <div class="row text-center">
+            <div class="col-md-4 mb-4" style="margin-left: 70px;">
+                <div class="card h-100">
+                    <img class="card-img-top" src="{% static 'img/empresas.jpg' %}" alt="Design" style="height: 150px;">
+                    <div class="card-body">
+                        <h4 class="card-title">Empresas</h4>
+                        <p class="card-text">Consulta nuestras empresas disponibles, para poder ponerte en contacto con ellas!</p>
+                    </div>
+                    <div class="card-footer py-4">
+                        <a href="{% url 'Empresas' %}" class="btn btn-secondary">Saber más &raquo;</a>
+                    </div>
+                </div>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="col-md-4 mb-4" style="margin-left: 70px;">
+                <div class="card h-100">
+                    <img class="card-img-top" src="{% static 'img/proveedores.jpg' %}" alt="Development" style="height: 150px;">
+                    <div class="card-body">
+                        <h4 class="card-title">Proveedores</h4>
+                        <p class="card-text">Consulta nuestros proveedores disponibles, para poder ponerte en contacto con ellos!</p>
+                    </div>
+                    <div class="card-footer py-4">
+                        <a href="{% url 'Proveedores' %}" class="btn btn-secondary">Saber más &raquo;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br>
+    <br>
+
+    <!-- Seccion 2 -->
+    <section class="container-fluid text-center py-4 mt-4" id="contact">
+        <h2 class="display-4 pb-4 my-4">Suscríbete a nuestra newsletter</h2>
+        <form method="POST">
+            {% csrf_token %}&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;<br>{{newsletter}}
+            <button type="submit" class="buttons">Enviar</button>
+        </form>
+        <p></p>
+        <p></p>
+    </section>
+
+    <br>
+    <br>
+    <br>
+
+    <!-- Seccion 3 -->
+    <section class="text-center">
+        <h2>¿Que es Changeep?</h2>
+        <p id="scroll">Te ayudamos a empezar desde 0. Changeep se encarga de echar una mano a aquellas PYMES que acaban de empezar, puedes ponerte en contacto con cualquier proveedor que necesites.
+            Y esto tambien va para vosotros proveedores.
+        </p>
+    </section>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Alta Proveedor</title>
+{% endblock %}
+
+{% block titulo_centro %}
+<h2>Alta Proveedor</h2>
+{% endblock titulo_centro %}
+
+<!-- Imagen header -->
+{% block imagen %}
+{% static 'img/global.jpg' %}
+{% endblock imagen %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-sm-12 col-xs-12" style="margin: auto;">
+            <div class="container register-form">
+                <div class="form">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <table>
+                                        {{form_proveedor.as_table}}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btnSubmit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<p style="text-align: center;">Tienes que <a style="color: green;" href="{% url 'login' %}">logearte</a> para poder dar
+    de alta tu empresa</p>
+{% endif %}
+{% endblock %}
